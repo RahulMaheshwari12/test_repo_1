@@ -1,0 +1,10 @@
+# Explainability Standard
+
+## Decision Logic
+The system implements a deterministic Directed Acyclic Graph (DAG) task scheduling engine paired with priority-weighted queue evaluation. When a high-level workflow payload is ingested, the Task Planner parses dependencies and calculates topological orderings. Work items are assigned integer priority scores from 1 (lowest) to 100 (highest, critical path). Execution agents are selected using a capability-matching algorithm that inspects registered skill manifests, historical latency, and current queue saturation. State transitions follow finite state machine rules where any failure triggers automatic circuit-breaking, retry assessment, and escalation to human-in-the-loop reviewers if retry limits are exceeded.
+
+## Data Sources
+Task orchestration relies on multiple structured inputs and state stores. The core intake receives JSON/YAML workflow payloads via HTTP webhook interfaces and CLI invocations. Execution state is persisted within transactional relational tables and Redis-backed distributed lock managers to prevent concurrent write collisions. Agent telemetry, intermediate task outputs, and environmental metrics are streamed directly from container runtime APIs and standardized logging sinks. External tool integrations consume authenticated REST endpoints from GitHub, Jira, and internal cloud service registries using ephemeral secret tokens.
+
+## Limitations
+The platform enforces a maximum task recursion depth of 10 nested sub-workflows to prevent unbounded execution loops. Individual task runtimes are strictly capped at 300 seconds before automated termination occurs. Downstream API calls are bounded by rate limiting policies (maximum 120 requests per minute per agent instance), beyond which requests queue in backpressure buffers. Hardware allocation is constrained to 2 vCPUs and 4 GB RAM per execution container. Complex semantic ambiguities in task specifications that cannot be resolved with high confidence require manual human intervention before dispatch.

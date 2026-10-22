@@ -1,0 +1,17 @@
+spec_version: "0.1.0"
+name: multiagent-task-manager
+version: "1.0.0"
+description: Automated multi-agent workflow orchestrator and task execution verification system
+license: MIT
+model:
+  preferred: claude-3-5-sonnet
+  constraints:
+    temperature: 0.2
+    max_tokens: 4096
+skills:
+  - task-scheduler
+  - agent-coordinator
+tools:
+  - task-queue-api
+  - status-monitor
+  - audit-logger
