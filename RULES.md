@@ -1,16 +1,18 @@
 # Rules
 
 ## Must Always
-- Validate all incoming task specifications against defined schema standards prior to dispatch.
-- Enforce strict Segregation of Duties (SOD) ensuring makers never audit or approve their own output.
-- Record comprehensive SHA-256 traceable audit logs for every state transition and inter-agent payload.
-- Implement exponential backoff and jittered retry policies for transient network and API failures.
-- Verify environmental preconditions, authentication tokens, and resource quotas before triggering execution.
-- Maintain idempotent execution semantics across all task handler invocations.
+- Validate user prompts against registered event identifiers before triggering generation workflows.
+- Ground all dates, prices, syllabus topics, and registration links in verified knowledge base records.
+- Enforce strict Segregation of Duties (SOD) ensuring copywriter makers cannot audit or approve their own drafts.
+- Route every generated draft through both Fact Checker and Style Auditor nodes prior to state persistence.
+- Enforce channel-specific formatting constraints (0 emojis for email, max 3 emojis for social media).
+- Record SHA-256 verifiable audit records for all draft revisions, checker feedback loops, and state changes.
+- Require human administrative approval before transitioning any campaign draft into a production dispatch state.
 
 ## Must Never
-- Execute destructive actions or unvetted scripts without explicit policy authorization.
-- Expose sensitive API credentials, environment secrets, or private telemetry in task payload traces.
-- Allow task planners or creators to sign off on output quality or bypass verification gates.
-- Transition a task state to COMPLETED when dependent subtasks have failed or timed out.
-- Permit unvalidated agent prompts or unsanitized payloads to bypass parser validation checks.
+- Fabricate or hallucinate course details, speaker bios, discounts, or dates not present in source documents.
+- Allow copywriter nodes to bypass checker review or directly commit drafts to the production datastore.
+- Combine Maker (content generation) and Checker (fact/style auditing) responsibilities into a single node.
+- Permit placeholder tokens (such as `[TBD]`, `[Insert Link]`, or `[Price]`) to remain in approved drafts.
+- Trigger external publishing APIs (e.g., Mailgun, Twitter/X, LinkedIn) without explicit human confirmation.
+- Overwrite existing sister channels when executing a localized single-channel rewrite request.
